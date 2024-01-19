@@ -5,7 +5,6 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
 import { useFormik } from "formik";
-import constants from "../../forms/constants";
 import { detailsTableValidationSchema } from "../../forms/validations";
 import { Autocomplete, Grid } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,7 +22,7 @@ const EditRowDialog = ({ edit, onClose, onSubmit }) => {
 
   React.useEffect(() => {
     dispatch(handleFetchItems());
-  }, []);
+  }, [dispatch]);
 
   const handleItemCodeChange = (event, newValue) => {
     formik.setFieldValue("item_code", newValue);

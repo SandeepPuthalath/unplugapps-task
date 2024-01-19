@@ -30,8 +30,7 @@ const Details = () => {
 
   const handleChange = () => setOpen((s) => !s);
 
-  const columns = React.useMemo(
-    () => [
+  const columns = [
       { field: "vr_no", headerName: "Vr No", flex: 1 },
       { field: "sr_no", headerName: "Sr No", flex: 1 },
       { field: "item_code", headerName: "Item Code", flex: 1 },
@@ -62,9 +61,7 @@ const Details = () => {
           </div>
         ),
       },
-    ],
-    []
-  );
+    ];
 
   const handleEdit = (id) => {
     setEdit((s) => !s);

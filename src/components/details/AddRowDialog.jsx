@@ -22,7 +22,7 @@ const AddRowDialog = ({ open, onClose, onSubmit }) => {
 
   React.useEffect(() => {
     dispatch(handleFetchItems());
-  }, []);
+  }, [dispatch]);
 
 
    const handleItemCodeChange = (event, newValue) => {
