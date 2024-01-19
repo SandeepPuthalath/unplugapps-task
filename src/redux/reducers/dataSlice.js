@@ -5,8 +5,10 @@ import config from "../../config";
 
 export const handleSaveDataToDB = createAsyncThunk("saveData", async (payload) => {
     try {
-        // const response = await axios.get
+        const response = await axios.post(config.INSERT_DATA, {...payload});
+        return response.data;
     } catch (error) {
+        console.log(error.message)
         return Promise.reject(error.message)
     }
 })
@@ -27,6 +29,7 @@ const dataSlice = createSlice({
     initialState: {
         loading: false,
         error: null,
+        successMessage: "",
         items: [],
         header_table: null,
         details_table: [],
@@ -50,7 +53,7 @@ const dataSlice = createSlice({
             state.details_table = [];
         },
         removeRowFromDetailsTable: (state, action) => {
-            state.details_table = state.details_table.filter((row) => row.id === action.payload);
+            state.details_table = state.details_table.filter((row) => row.id !== action.payload);
         },
         setDataToEditToRow: (state, action) => {
             state.row = state.details_table.find(row => row.id === action.payload)
@@ -78,6 +81,18 @@ const dataSlice = createSlice({
                 state.items = [...action.payload];
             })
             .addCase(handleFetchItems.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message
+            })
+            .addCase(handleSaveDataToDB.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(handleSaveDataToDB.fulfilled, (state, action) => {
+                console.log(action.payload)
+                state.loading = false;
+            })
+            .addCase(handleSaveDataToDB.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message
             })
